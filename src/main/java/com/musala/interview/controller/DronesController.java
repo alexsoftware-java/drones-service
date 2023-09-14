@@ -2,14 +2,10 @@ package com.musala.interview.controller;
 
 import com.musala.interview.controller.contract.DronesControllerAPI;
 import com.musala.interview.dto.DroneDto;
-import com.musala.interview.dto.DroneRequestDto;
 import com.musala.interview.dto.MedicationDto;
-import com.musala.interview.dto.MedicationRequestDto;
 import com.musala.interview.service.DronesDispatcherService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Collections;
 import java.util.List;
@@ -38,12 +34,12 @@ public class DronesController implements DronesControllerAPI {
     }
 
     @Override
-    public List<MedicationDto> addMedicationBySN(String serialNumber, MedicationRequestDto requestDto) {
+    public List<MedicationDto> addMedicationBySN(String serialNumber, MedicationDto requestDto) {
         return null;
     }
 
     @Override
-    public void createDrone(DroneRequestDto requestDto) {
+    public void createDrone(DroneDto requestDto) {
 
     }
 }
