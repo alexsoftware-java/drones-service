@@ -9,3 +9,10 @@ spring:
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect
     defer-datasource-initialization: true
+logging:
+  level:
+    org.springframework.web: DEBUG
+    com.musala.interview: DEBUG
+    org.hibernate: INFO
+  file:
+    name: ./logs/drones-dispatcher-service.log
