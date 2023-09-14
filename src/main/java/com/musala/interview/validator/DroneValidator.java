@@ -1,16 +1,9 @@
 package com.musala.interview.validator;
 
 import com.musala.interview.dto.DroneDto;
-import com.musala.interview.dto.Model;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import org.springframework.util.StringUtils;
-
-import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
-import com.musala.interview.dto.Model;
 
 import static com.musala.interview.utils.Constants.*;
 
