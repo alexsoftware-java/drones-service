@@ -10,10 +10,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -23,11 +21,14 @@ public class DroneService {
     private final DroneEntityToDroneDtoConverter converter;
 
     /**
-     * @return List of drones in IDLE state
+     * @return List of drones in IDLE state and >25 of battery
      */
     public List<DroneDto> getAvailableDrones() {
-        var dronesInIdleState = dronesRepository.findByStateIn(List.of(State.IDLE));
-        log.debug("Get available drones request. Found {} drones in IDLE state", dronesInIdleState.size());
+        var dronesInIdleState = dronesRepository.findByStateIn(List.of(State.IDLE))
+                .stream()
+                .filter(drone -> drone.getBatteryCapacity() > 25)
+                .toList();
+        log.debug("Get available drones request. Found {} drones in IDLE state and >25% of battery", dronesInIdleState.size());
         if (!dronesInIdleState.isEmpty()) {
             return dronesInIdleState.stream().map(converter::convert).toList();
         } else {

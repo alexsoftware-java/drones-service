@@ -16,3 +16,6 @@ logging:
     org.hibernate: INFO
   file:
     name: ./logs/drones-dispatcher-service.log
+drones:
+  dispatcher:
+    fixedRateMs: 10_000

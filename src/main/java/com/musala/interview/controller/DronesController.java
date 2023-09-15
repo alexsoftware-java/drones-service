@@ -4,18 +4,14 @@ import com.musala.interview.controller.contract.DronesControllerAPI;
 import com.musala.interview.dto.DroneDto;
 import com.musala.interview.dto.MedicationDto;
 import com.musala.interview.service.DroneService;
-import com.musala.interview.service.MedicationService;
 import com.musala.interview.service.ImageService;
+import com.musala.interview.service.MedicationService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.server.ResponseStatusException;
 
-import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
