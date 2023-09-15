@@ -39,6 +39,16 @@ public class DronesController implements DronesControllerAPI {
     }
 
     @Override
+    public void addImage(String serialNumber, String medicationId, byte[] image) {
+
+    }
+
+    @Override
+    public byte[] getImage(String serialNumber, String medicationId) {
+        return new byte[0];
+    }
+
+    @Override
     public void createDrone(DroneDto requestDto) {
 
     }
