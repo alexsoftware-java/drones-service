@@ -56,7 +56,7 @@ public class DroneEntity {
     @Enumerated(EnumType.STRING)
     private State state = State.IDLE;
 
-    @OneToMany(mappedBy = "drone", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "drone", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     @MapKey(name = "id")
     private Collection<GoodsEntity> goods;
 }
