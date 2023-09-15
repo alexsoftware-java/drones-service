@@ -16,7 +16,7 @@ public class MedicationValidator implements ConstraintValidator<ValidMedication,
     @Override
     public void initialize(ValidMedication constraintAnnotation) {
         namePattern = Pattern.compile("^[\\w-]*$"); // only letters, numbers, ‘-‘, ‘_’
-        codePattern = Pattern.compile("^[A-Z0-9_]*$"); // only upper case letters, underscore and numbers
+        codePattern = Pattern.compile("^[A-Z\\d_]*$"); // only upper case letters, underscore and numbers
         ConstraintValidator.super.initialize(constraintAnnotation);
     }
 

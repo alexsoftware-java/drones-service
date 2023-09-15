@@ -12,11 +12,8 @@ import static java.lang.annotation.ElementType.FIELD;
 @Documented
 @Constraint(validatedBy = {EnumValidator.class})
 public @interface ValidEnum {
-    Class<? extends Enum<?>> enumClass();
-
+    String allowedValues();
     String message() default "";
-
     Class<?>[] groups() default {};
-
     Class<? extends Payload>[] payload() default {};
 }

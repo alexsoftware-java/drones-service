@@ -3,27 +3,27 @@ package com.musala.interview.validator;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.regex.PatternSyntaxException;
 
-public class EnumValidator implements ConstraintValidator<ValidEnum, String> {
-    private List<String> acceptedValues;
-
+public class EnumValidator implements ConstraintValidator<ValidEnum, Enum<?>> {
+    private Pattern pattern;
     @Override
-    public void initialize(ValidEnum annotation)
-    {
-        acceptedValues = Stream.of(annotation.enumClass().getEnumConstants())
-                .map(Enum::name)
-                .collect(Collectors.toList());
+    public void initialize(ValidEnum annotation) {
+        try {
+            pattern = Pattern.compile(annotation.allowedValues());
+        } catch (PatternSyntaxException e) {
+            throw new IllegalArgumentException("Given regex is invalid", e);
+        }
     }
 
     @Override
-    public boolean isValid(String value, ConstraintValidatorContext context)
-    {
+    public boolean isValid(Enum<?> value, ConstraintValidatorContext context) {
         if (value == null) {
             return true;
         }
-        return acceptedValues.contains(value);
+        Matcher m = pattern.matcher(value.name());
+        return m.matches();
     }
 }
