@@ -49,10 +49,10 @@ class DroneServiceTest {
 
         // then
         assertFalse(resultList.isEmpty());
-        assertEquals(1, resultList.get().size());
-        assertEquals("12345", resultList.get().get(0).getSerialNumber());
-        assertEquals(State.IDLE, resultList.get().get(0).getState());
-        assertEquals(Model.MIDDLEWEIGHT, resultList.get().get(0).getModel());
+        assertEquals(1, resultList.size());
+        assertEquals("12345", resultList.get(0).getSerialNumber());
+        assertEquals(State.IDLE, resultList.get(0).getState());
+        assertEquals(Model.MIDDLEWEIGHT, resultList.get(0).getModel());
     }
 
     @Test
