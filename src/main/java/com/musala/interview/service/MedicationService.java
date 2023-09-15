@@ -3,6 +3,7 @@ package com.musala.interview.service;
 import com.musala.interview.converter.GoodsEntityToMedicationDtoConverter;
 import com.musala.interview.dto.MedicationDto;
 import com.musala.interview.dto.State;
+import com.musala.interview.entity.DroneEntity;
 import com.musala.interview.entity.GoodsEntity;
 import com.musala.interview.exception.DispatcherException;
 import com.musala.interview.repository.DronesRepository;
@@ -41,13 +42,7 @@ public class MedicationService {
         if (drone.isEmpty()) {
             throw new DispatcherException("Drone with SN %s can't be found! Medication can't be added".formatted(droneSN));
         }
-        if (!State.IDLE.equals(drone.get().getState())) {
-            throw new DispatcherException("Drone with SN %s is not in the IDLE state! Medication can't be added".formatted(droneSN));
-        }
-        int allMedicationOnBoardWeight = getDroneMedication(droneSN).stream().mapToInt(MedicationDto::getWeight).sum();
-        if ((allMedicationOnBoardWeight + requestDto.getWeight()) > drone.get().getWeightLimit()) {
-            throw new DispatcherException("Medication can't be added to drone with SN %s, as weight limit of %d gr will be exceeded!".formatted(droneSN, drone.get().getWeightLimit()));
-        }
+        checkIfMedicationSuitsDrone(droneSN, requestDto, drone.get());
         var medication = new GoodsEntity();
         medication.setGoodsType(GoodsTypes.MEDICATIONS);
         medication.setName(requestDto.getName());
@@ -58,4 +53,18 @@ public class MedicationService {
         log.debug("Medication added to drone {}, medication id {}", droneSN, createdMedication.getId());
         return getDroneMedication(droneSN);
     }
+
+    /**
+     * Throws business exception if drone state is not IDLE or weight limit well be exceeded by the loading
+     */
+    private void checkIfMedicationSuitsDrone(String droneSN, MedicationDto requestDto, DroneEntity drone){
+        if (!State.IDLE.equals(drone.getState())) {
+            throw new DispatcherException("Drone with SN %s is not available! Medication can't be added".formatted(droneSN));
+        }
+        int allMedicationOnBoardWeight = getDroneMedication(droneSN).stream().mapToInt(MedicationDto::getWeight).sum();
+        if ((allMedicationOnBoardWeight + requestDto.getWeight()) > drone.getWeightLimit()) {
+            throw new DispatcherException("Medication can't be added to drone with SN %s, as weight limit of %d gr will be exceeded!".formatted(droneSN, drone.getWeightLimit()));
+        }
+    }
+
 }
