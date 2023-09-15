@@ -30,12 +30,10 @@ public interface DronesControllerAPI {
                                           @ValidMedication @RequestBody MedicationDto medicationRequestDto);
 
     @PostMapping(value = "/{serialNumber}/medication/{medicationId}/image", consumes = MediaType.IMAGE_JPEG_VALUE)
-    void addImage(@PathVariable("serialNumber") String serialNumber,
-                  @PathVariable("medicationId") String medicationId,
+    void addImage(@PathVariable("medicationId") String medicationId,
                   byte[] image);
 
     @GetMapping(value = "/{serialNumber}/medication/{medicationId}/image", produces = MediaType.IMAGE_JPEG_VALUE)
-    byte[] getImage(@PathVariable("serialNumber") String serialNumber,
-                    @PathVariable("medicationId") String medicationId);
+    byte[] getImage(@PathVariable("medicationId") String medicationId);
 
 }

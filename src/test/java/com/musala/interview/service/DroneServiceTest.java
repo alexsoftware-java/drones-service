@@ -8,11 +8,8 @@ import com.musala.interview.entity.DroneEntity;
 import com.musala.interview.repository.DronesRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentCaptor;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.util.Collections;
 import java.util.List;
@@ -24,16 +21,16 @@ import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
 
 @SpringBootTest
-class DronesDispatcherServiceTest {
+class DroneServiceTest {
 
     @Mock
     private DronesRepository dronesRepository;
-    private DronesDispatcherService service;
+    private DroneService service;
     private DroneEntity entity;
 
     @BeforeEach
     void init(){
-        service = new DronesDispatcherService(dronesRepository, new DroneEntityToDroneDtoConverter());
+        service = new DroneService(dronesRepository, new DroneEntityToDroneDtoConverter());
         entity = new DroneEntity();
         entity.setId(1);
         entity.setSerialNumber("12345");

@@ -42,7 +42,7 @@ public class GoodsEntity {
     @NotEmpty
     private String code;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false, cascade = CascadeType.MERGE)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false, cascade = CascadeType.MERGE)
     @JoinColumn(name = "drone_id", referencedColumnName = "id", nullable = false)
     private DroneEntity drone;
 

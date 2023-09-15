@@ -17,7 +17,7 @@ public class MedicationDto {
      */
     private String code;
     /**
-     * Image as bytearray, max 10 Megabytes
+     * Image - image id in DB (JPEG)
      */
-    private byte[] image;
+    private long imageId;
 }

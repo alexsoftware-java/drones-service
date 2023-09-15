@@ -2,7 +2,6 @@ package com.musala.interview.service;
 
 import com.musala.interview.converter.DroneEntityToDroneDtoConverter;
 import com.musala.interview.dto.DroneDto;
-import com.musala.interview.dto.MedicationDto;
 import com.musala.interview.dto.State;
 import com.musala.interview.entity.DroneEntity;
 import com.musala.interview.repository.DronesRepository;
@@ -16,7 +15,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @Service
 @Slf4j
-public class DronesDispatcherService {
+public class DroneService {
     private final DronesRepository dronesRepository;
     private final DroneEntityToDroneDtoConverter converter;
 
@@ -34,7 +33,7 @@ public class DronesDispatcherService {
     }
 
     /**
-     * Creates drone entity in h2 DB
+     * Creates drone entity
      * @param requestDto validated by {@link com.musala.interview.validator.DroneValidator}
      * @return created drone
      */
@@ -60,10 +59,6 @@ public class DronesDispatcherService {
         var createdDrone = dronesRepository.saveAndFlush(drone);
         log.debug("Drone has been added with id {}", createdDrone.getId());
         return converter.convert(createdDrone);
-    }
-
-    public Optional<List<MedicationDto>> getDroneMedication(String droneSN) {
-        return Optional.of(List.of(new MedicationDto()));
     }
 
     public Integer getDroneBatteryLevelBySN(String serialNumber) {
