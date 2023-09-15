@@ -22,12 +22,12 @@ public class DroneDto {
      */
     private Integer weightLimit;
     /**
-     * battery capacity (percentage), 0-100. Default = 100
+     * battery capacity (percentage), 0-100
      */
-    private int batteryCapacity = 100;
+    private Integer batteryCapacity;
     /**
-     * State (IDLE, LOADING, LOADED, DELIVERING, DELIVERED, RETURNING). Default - IDLE
+     * State (IDLE, LOADING, LOADED, DELIVERING, DELIVERED, RETURNING)
      */
     @ValidEnum(allowedValues = "IDLE|LOADING|LOADED|DELIVERING|DELIVERED|RETURNING", message = "Invalid state! Allowed: IDLE, LOADING, LOADED, DELIVERING, DELIVERED, RETURNING")
-    private State state = State.IDLE;
+    private State state;
 }

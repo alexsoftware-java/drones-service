@@ -5,7 +5,10 @@ import com.musala.interview.dto.DroneDto;
 import com.musala.interview.dto.MedicationDto;
 import com.musala.interview.service.DronesDispatcherService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Collections;
 import java.util.List;
@@ -13,18 +16,30 @@ import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
+@Slf4j
 public class DronesController implements DronesControllerAPI {
     private final DronesDispatcherService dispatcherService;
 
     @Override
+    public DroneDto addDrone(DroneDto requestDto) {
+        return dispatcherService.addDrone(requestDto);
+    }
+
+    @Override
     public List<DroneDto> listAvailableDrones() {
-       Optional<List<DroneDto>> listOfAvailableDrones = dispatcherService.getAvailableDrones();
-       return listOfAvailableDrones.orElse(Collections.emptyList());
+        Optional<List<DroneDto>> listOfAvailableDrones = dispatcherService.getAvailableDrones();
+        return listOfAvailableDrones.orElse(Collections.emptyList());
     }
 
     @Override
     public Integer getDroneBatteryLevelBySN(String serialNumber) {
-        return null;
+        var batteryLevel = dispatcherService.getDroneBatteryLevelBySN(serialNumber);
+        if (batteryLevel != null) {
+            return batteryLevel;
+        } else {
+            log.warn("getDroneBatteryLevelBySN request failed, drone with SN %s not found".formatted(serialNumber));
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Drone is not found");
+        }
     }
 
     @Override
@@ -46,10 +61,5 @@ public class DronesController implements DronesControllerAPI {
     @Override
     public byte[] getImage(String serialNumber, String medicationId) {
         return new byte[0];
-    }
-
-    @Override
-    public void createDrone(DroneDto requestDto) {
-
     }
 }
