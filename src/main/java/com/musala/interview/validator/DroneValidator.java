@@ -15,8 +15,8 @@ public class DroneValidator implements ConstraintValidator<ValidDrone, DroneDto>
 
     @Override
     public boolean isValid(DroneDto requestDto, ConstraintValidatorContext context) {
-        if (!StringUtils.hasText(requestDto.getSn())) return false;
-        if (requestDto.getSn().length() > DRONE_MAX_SN_LENGTH || requestDto.getSn().length() < DRONE_MIN_SN_LENGTH) return false;
+        if (!StringUtils.hasText(requestDto.getSerialNumber())) return false;
+        if (requestDto.getSerialNumber().length() > DRONE_MAX_SN_LENGTH || requestDto.getSerialNumber().length() < DRONE_MIN_SN_LENGTH) return false;
         return requestDto.getWeightLimit() >= 0 && requestDto.getWeightLimit() <= MAX_DRONE_CAPACITY;
     }
 }

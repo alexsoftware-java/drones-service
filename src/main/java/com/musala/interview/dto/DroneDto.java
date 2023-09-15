@@ -11,7 +11,7 @@ public class DroneDto {
     /**
      * Serial number (100 characters max);
      */
-    private String sn;
+    private String serialNumber;
     /**
      * Model (Lightweight, Middleweight, Cruiserweight, Heavyweight)
      */
