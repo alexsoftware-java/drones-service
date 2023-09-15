@@ -4,11 +4,14 @@ import com.musala.interview.converter.DroneEntityToDroneDtoConverter;
 import com.musala.interview.dto.DroneDto;
 import com.musala.interview.dto.State;
 import com.musala.interview.entity.DroneEntity;
+import com.musala.interview.exception.DispatcherException;
 import com.musala.interview.repository.DronesRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,20 +23,21 @@ public class DroneService {
     private final DroneEntityToDroneDtoConverter converter;
 
     /**
-     * @return Optional List of drones in IDLE state
+     * @return List of drones in IDLE state
      */
-    public Optional<List<DroneDto>> getAvailableDrones() {
+    public List<DroneDto> getAvailableDrones() {
         var dronesInIdleState = dronesRepository.findByStateIn(List.of(State.IDLE));
         log.debug("Get available drones request. Found {} drones in IDLE state", dronesInIdleState.size());
         if (!dronesInIdleState.isEmpty()) {
-            return Optional.of(dronesInIdleState.stream().map(converter::convert).toList());
+            return dronesInIdleState.stream().map(converter::convert).toList();
         } else {
-            return Optional.empty();
+            return Collections.emptyList();
         }
     }
 
     /**
      * Creates drone entity
+     *
      * @param requestDto validated by {@link com.musala.interview.validator.DroneValidator}
      * @return created drone
      */
@@ -63,6 +67,9 @@ public class DroneService {
 
     public Integer getDroneBatteryLevelBySN(String serialNumber) {
         var drone = dronesRepository.findBySerialNumber(serialNumber);
-        return drone.map(DroneEntity::getBatteryCapacity).orElse(null);
+        if (drone.isEmpty()) {
+            throw new DispatcherException("Drone with SN %s not found".formatted(serialNumber));
+        }
+        return drone.get().getBatteryCapacity();
     }
 }

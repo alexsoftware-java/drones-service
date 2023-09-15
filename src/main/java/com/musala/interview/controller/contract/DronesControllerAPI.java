@@ -4,9 +4,11 @@ import com.musala.interview.dto.DroneDto;
 import com.musala.interview.dto.MedicationDto;
 import com.musala.interview.validator.ValidDrone;
 import com.musala.interview.validator.ValidMedication;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.http.MediaType;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -30,10 +32,10 @@ public interface DronesControllerAPI {
                                           @ValidMedication @RequestBody MedicationDto medicationRequestDto);
 
     @PostMapping(value = "/{serialNumber}/medication/{medicationId}/image", consumes = MediaType.IMAGE_JPEG_VALUE)
-    void addImage(@PathVariable("medicationId") String medicationId,
-                  byte[] image);
+    void addImage(@NotNull @PathVariable("medicationId") Long medicationId,
+                  MultipartFile image);
 
     @GetMapping(value = "/{serialNumber}/medication/{medicationId}/image", produces = MediaType.IMAGE_JPEG_VALUE)
-    byte[] getImage(@PathVariable("medicationId") String medicationId);
+    byte[] getImage(@NotNull @PathVariable("medicationId") Long medicationId);
 
 }

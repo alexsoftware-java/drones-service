@@ -3,19 +3,19 @@ package com.musala.interview.exception.handler;
 import com.musala.interview.exception.DispatcherException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.server.ResponseStatusException;
 
 /**
  * Exception handler for custom validators
  */
 @Slf4j
 @ControllerAdvice
-public class CustomExceptionHandler {
+public class DispatcherExceptionHandler {
     @ExceptionHandler(DispatcherException.class)
-    public void handleDispatcherException(DispatcherException ex) {
+    public ResponseEntity<String> handleDispatcherException(DispatcherException ex) {
         log.warn("Dispatcher exception occurred %s".formatted(ex.getMessage()), ex);
-        throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Dispatcher can't proceed your request");
+        return new ResponseEntity<>("Dispatcher can't proceed your request: "+ex.getMessage(), HttpStatus.BAD_REQUEST);
     }
 }

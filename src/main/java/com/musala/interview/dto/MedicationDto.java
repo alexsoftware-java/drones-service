@@ -1,15 +1,20 @@
 package com.musala.interview.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 @Data
 public class MedicationDto {
     /**
+     * Medication ID
+     */
+    private Long id;
+    /**
      * Medication name (allowed only letters, numbers, ‘-‘, ‘_’)
      */
     private String name;
     /**
-     * Weight, integer, max 500 - not more than any drone capacity
+     * Weight, max 500 - not more than any drone capacity
      */
     private int weight;
     /**
@@ -19,5 +24,5 @@ public class MedicationDto {
     /**
      * Image - image id in DB (JPEG)
      */
-    private long imageId;
+    private Long imageId;
 }

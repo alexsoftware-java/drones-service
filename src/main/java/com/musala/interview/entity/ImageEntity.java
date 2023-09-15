@@ -28,5 +28,6 @@ public class ImageEntity {
 
     @Lob
     @JdbcType(value = VarbinaryJdbcType.class)
+    @Column(name = "image", length = 1_000_000)
     private byte[] image;
 }

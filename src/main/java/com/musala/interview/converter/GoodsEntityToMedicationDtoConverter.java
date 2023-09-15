@@ -15,6 +15,7 @@ public class GoodsEntityToMedicationDtoConverter implements Converter<GoodsEntit
             throw new DispatcherException("Illegal argument during goods to medication conversion given!");
         }
         var medication = new MedicationDto();
+        medication.setId(source.getId());
         medication.setName(source.getName());
         medication.setCode(source.getCode());
         medication.setWeight(source.getWeight());

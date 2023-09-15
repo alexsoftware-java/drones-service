@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Collections;
@@ -31,19 +32,12 @@ public class DronesController implements DronesControllerAPI {
 
     @Override
     public List<DroneDto> listAvailableDrones() {
-        Optional<List<DroneDto>> listOfAvailableDrones = dispatcherService.getAvailableDrones();
-        return listOfAvailableDrones.orElse(Collections.emptyList());
+        return dispatcherService.getAvailableDrones();
     }
 
     @Override
     public Integer getDroneBatteryLevelBySN(String serialNumber) {
-        var batteryLevel = dispatcherService.getDroneBatteryLevelBySN(serialNumber);
-        if (batteryLevel != null) {
-            return batteryLevel;
-        } else {
-            log.warn("getDroneBatteryLevelBySN request failed, drone with SN %s not found".formatted(serialNumber));
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Drone is not found");
-        }
+        return dispatcherService.getDroneBatteryLevelBySN(serialNumber);
     }
 
     @Override
@@ -57,12 +51,12 @@ public class DronesController implements DronesControllerAPI {
     }
 
     @Override
-    public void addImage(String medicationId, byte[] image) {
+    public void addImage(Long medicationId, MultipartFile image) {
         imageService.addImage(medicationId, image);
     }
 
     @Override
-    public byte[] getImage(String medicationId) {
+    public byte[] getImage(Long medicationId) {
         return imageService.getImage(medicationId);
     }
 }
