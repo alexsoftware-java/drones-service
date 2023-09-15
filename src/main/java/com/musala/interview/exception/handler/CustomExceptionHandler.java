@@ -7,6 +7,9 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.server.ResponseStatusException;
 
+/**
+ * Exception handler for custom validators
+ */
 @Slf4j
 @ControllerAdvice
 public class CustomExceptionHandler {
