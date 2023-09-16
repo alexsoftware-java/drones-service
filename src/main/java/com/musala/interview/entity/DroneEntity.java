@@ -8,7 +8,6 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.validator.constraints.Length;
@@ -23,8 +22,7 @@ import static com.musala.interview.utils.Constants.*;
 @Setter
 public class DroneEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "drones_id_seq")
-    @SequenceGenerator(name = "drones_id_seq", sequenceName = "drones_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @CreationTimestamp
@@ -50,11 +48,11 @@ public class DroneEntity {
     @NotNull
     @Min(0)
     @Max(100)
-    private Integer batteryCapacity = 100;
+    private Integer batteryCapacity;
 
     @NotNull
     @Enumerated(EnumType.STRING)
-    private State state = State.IDLE;
+    private State state;
 
     @OneToMany(mappedBy = "drone", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     @MapKey(name = "id")

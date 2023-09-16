@@ -1,6 +1,5 @@
 package com.musala.interview.entity;
 
-import com.musala.interview.utils.GoodsTypes;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
@@ -20,8 +19,7 @@ import static com.musala.interview.utils.Constants.MAX_DRONE_CAPACITY;
 @Setter
 public class GoodsEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "goods_id_seq")
-    @SequenceGenerator(name = "goods_id_seq", sequenceName = "goods_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @CreationTimestamp
@@ -29,7 +27,7 @@ public class GoodsEntity {
     private LocalDateTime createdAt;
 
     @NotNull
-    private int goodsType = GoodsTypes.MEDICATIONS;
+    private int goodsType;
 
     @NotEmpty
     private String name;
@@ -45,8 +43,7 @@ public class GoodsEntity {
     @ManyToOne(fetch = FetchType.EAGER, optional = false, cascade = CascadeType.MERGE)
     @JoinColumn(name = "drone_id", referencedColumnName = "id", nullable = false)
     private DroneEntity drone;
-
-    @Nullable
+    
     @OneToOne
     @JoinColumn(name="image_id", referencedColumnName = "id")
     private ImageEntity image;
