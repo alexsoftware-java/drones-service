@@ -8,5 +8,4 @@ public class Constants {
     public final static int MAX_MEDICINE_WEIGHT = MAX_DRONE_CAPACITY;
     public final static int DRONE_MIN_SN_LENGTH = 5;
     public final static int DRONE_MAX_SN_LENGTH = 100;
-    public final static int DRONES_STEPS_FOR_CHARGING_REQUIRED = 5;
 }

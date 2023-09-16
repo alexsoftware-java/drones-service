@@ -1,5 +1,6 @@
 package com.musala.interview.service;
 
+import com.musala.interview.config.PropertiesConfig;
 import com.musala.interview.converter.DroneEntityToDroneDtoConverter;
 import com.musala.interview.dto.DroneDto;
 import com.musala.interview.dto.Model;
@@ -30,7 +31,7 @@ class DroneServiceTest {
 
     @BeforeEach
     void init(){
-        service = new DroneService(dronesRepository, new DroneEntityToDroneDtoConverter());
+        service = new DroneService(dronesRepository, new DroneEntityToDroneDtoConverter(), new PropertiesConfig());
         entity = new DroneEntity();
         entity.setId(1);
         entity.setSerialNumber("12345");

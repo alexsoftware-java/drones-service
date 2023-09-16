@@ -17,5 +17,9 @@ logging:
   file:
     name: ./logs/drones-dispatcher-service.log
 drones:
-  dispatcher:
-    fixedRateMs: 10_000
+  dispatcher-check-ms: ${DISPATCHER_CHECK_MS:10000}
+  discharge-when-move-percent: ${DISCHARGE_WHEN_MOVE_PERCENT:5}
+  discharge-when-idle-percent: ${DISCHARGE_WHEN_IDLE_PERCENT:2}
+  charge-on-every-check-by-percent: ${CHARGING_ON_EVERY_STEP_BY_PERCENT:5}
+  battery-level-threshold: ${BATTERY_LEVEL_THRESHOLD:25}
+  steps-before-charged: ${STEP_BEFORE_CHARGED:5}

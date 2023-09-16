@@ -1,5 +1,6 @@
 package com.musala.interview.service;
 
+import com.musala.interview.config.PropertiesConfig;
 import com.musala.interview.converter.DroneEntityToDroneDtoConverter;
 import com.musala.interview.dto.DroneDto;
 import com.musala.interview.dto.State;
@@ -19,14 +20,15 @@ import java.util.List;
 public class DroneService {
     private final DronesRepository dronesRepository;
     private final DroneEntityToDroneDtoConverter converter;
+    private final PropertiesConfig propertiesConfig;
 
     /**
-     * @return List of drones in IDLE state and >25 of battery
+     * @return List of drones in IDLE state and good level of battery charge
      */
     public List<DroneDto> getAvailableDrones() {
         var dronesInIdleState = dronesRepository.findByStateIn(List.of(State.IDLE))
                 .stream()
-                .filter(drone -> drone.getBatteryCapacity() > 25)
+                .filter(drone -> drone.getBatteryCapacity() > propertiesConfig.getBatteryLevelThreshold())
                 .toList();
         log.debug("Get available drones request. Found {} drones in IDLE state and >25% of battery", dronesInIdleState.size());
         if (!dronesInIdleState.isEmpty()) {
