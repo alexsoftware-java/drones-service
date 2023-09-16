@@ -11,8 +11,9 @@ spring:
     defer-datasource-initialization: true
 logging:
   level:
-    org.springframework.web: DEBUG
     com.musala.interview: DEBUG
+    org.springframework.web: DEBUG
+    org.springdoc: INFO
     org.hibernate: INFO
   file:
     name: ./logs/drones-dispatcher-service.log
