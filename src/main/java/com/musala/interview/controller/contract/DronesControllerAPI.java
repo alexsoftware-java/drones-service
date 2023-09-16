@@ -20,7 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
-@Tag(name = "Drones dispatcher API", description = "API allowing Create and Read operations on drones and theirs deliveries")
+@Tag(name = "Drones dispatcher API", description = "API allowing CRUD operation on drones and theirs deliveries")
 @RequestMapping("/api/v1/drones")
 @Validated
 public interface DronesControllerAPI {
@@ -30,7 +30,7 @@ public interface DronesControllerAPI {
 
     @Operation(summary = "Get drone battery level by drone serialNumber")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Found the book",
+            @ApiResponse(responseCode = "200", description = "Drone battery capacity (%)",
                     content = {@Content(mediaType = "application/json",
                             schema = @Schema(implementation = Integer.class))}),
             @ApiResponse(responseCode = "400", description = "Drone is not found by given serialNumber",
@@ -56,6 +56,10 @@ public interface DronesControllerAPI {
     })
     @PostMapping
     DroneDto addDrone(@ValidDrone @Parameter(description = "JSON represents the drone expected to be added") @RequestBody DroneDto droneRequestDto);
+
+    @Operation(summary = "Delete drone under dispatcher control(hard deletion)")
+    @DeleteMapping(value = "/{serialNumber}")
+    void deleteDrone(@PathVariable("serialNumber") String serialNumber);
 
     @Operation(summary = "Get medication")
     @ApiResponses(value = {
