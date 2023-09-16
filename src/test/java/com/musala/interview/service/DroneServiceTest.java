@@ -34,6 +34,7 @@ class DroneServiceTest {
         service = new DroneService(dronesRepository, new DroneEntityToDroneDtoConverter(), new PropertiesConfig());
         entity = new DroneEntity();
         entity.setId(1);
+        entity.setBatteryCapacity(100);
         entity.setSerialNumber("12345");
         entity.setState(State.IDLE);
         entity.setModel(Model.MIDDLEWEIGHT);
@@ -87,5 +88,13 @@ class DroneServiceTest {
     void getDroneBatteryLevelBySN() {
         when(dronesRepository.findBySerialNumber(eq("12345"))).thenReturn(Optional.of(entity));
         assertEquals(entity.getBatteryCapacity(), service.getDroneBatteryLevelBySN("12345"));
+    }
+
+    @Test
+    void deleteDrone() {
+        when(dronesRepository.findBySerialNumber(eq("12345"))).thenReturn(Optional.of(entity));
+        doNothing().when(dronesRepository).delete(any(DroneEntity.class));
+        assertDoesNotThrow(() -> service.deleteDrone("12345"));
+        verify(dronesRepository, times(1)).delete(any(DroneEntity.class));
     }
 }

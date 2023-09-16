@@ -40,7 +40,7 @@ public class DispatcherScheduledService {
     @Scheduled(fixedRateString = "${drones.dispatcher-check-ms}")
     public void dronesDispatcher() {
         var drones = dronesRepository.findAll();
-        log.debug("Dispatcher: I'm alive! Drones in the list {}", drones.stream().map(DroneEntity::getSerialNumber).toList());
+        log.debug("Dispatcher: I'm alive! Drones are under my control {}", drones.stream().map(DroneEntity::getSerialNumber).toList());
         for (var drone : drones) {
             String sn = drone.getSerialNumber();
             // Check if drone is still charging (charging steps is not over)
@@ -48,7 +48,7 @@ public class DispatcherScheduledService {
                 log.debug("Dispatcher: Drone {} is still on charge, steps remaining: {}", sn, dronesOnCharge.get(sn));
                 charge(drone);
                 dronesOnCharge.put(sn, dronesOnCharge.get(sn) - 1);
-            // Check if drone is needs to be charged
+                // Check if drone is needs to be charged
             } else if (drone.getState().equals(State.IDLE) && drone.getBatteryCapacity() < propertiesConfig.getBatteryLevelThreshold()) {
                 dronesOnCharge.put(drone.getSerialNumber(), propertiesConfig.getStepsBeforeCharged());
                 log.warn("Dispatcher: Drone {} has low battery capacity level! Going to send it to charging station!", sn);
@@ -87,7 +87,7 @@ public class DispatcherScheduledService {
         int newBatteryLevel = drone.getBatteryCapacity() + propertiesConfig.getChargeOnEveryCheckByPercent();
         if (newBatteryLevel > 100) newBatteryLevel = 100;
         drone.setBatteryCapacity(newBatteryLevel);
-        log.info("Dispatcher: Drone is on charge, current battery level is {}%", drone.getBatteryCapacity());
+        log.info("Dispatcher: Drone {} is on charge, current battery level is {}%", drone.getSerialNumber(), drone.getBatteryCapacity());
         dronesRepository.saveAndFlush(drone);
     }
 

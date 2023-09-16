@@ -49,13 +49,17 @@ public class DroneService {
         var drone = new DroneEntity();
         drone.setSerialNumber(requestDto.getSerialNumber());
         drone.setModel(requestDto.getModel());
-        // Get drone's battery level, if null - default 100% will be set by hibernate
+        // Get drone's battery level, if null - default 100% will be set
         if (requestDto.getBatteryCapacity() != null) {
             drone.setBatteryCapacity(requestDto.getBatteryCapacity());
+        } else {
+            drone.setBatteryCapacity(100);
         }
-        // Get state, if null - default IDLE will be set by hibernate
+        // Get state, if null - default IDLE will be set
         if (requestDto.getState() != null) {
             drone.setState(requestDto.getState());
+        } else {
+            drone.setState(State.IDLE);
         }
         // Get weight limit, if null - limit of drone's model will be used
         if (requestDto.getWeightLimit() != null) {
@@ -74,5 +78,15 @@ public class DroneService {
             throw new DispatcherException("Drone with SN %s not found".formatted(serialNumber));
         }
         return drone.get().getBatteryCapacity();
+    }
+
+    public void deleteDrone(String serialNumber) {
+        var drone = dronesRepository.findBySerialNumber(serialNumber);
+        if (drone.isEmpty()) {
+            throw new DispatcherException("Drone with SN %s not found".formatted(serialNumber));
+        }
+        log.debug("Drone {} will be deleted by user request", serialNumber);
+        dronesRepository.delete(drone.get());
+        dronesRepository.flush();
     }
 }

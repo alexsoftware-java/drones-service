@@ -27,6 +27,11 @@ public class DronesController implements DronesControllerAPI {
     }
 
     @Override
+    public void deleteDrone(String serialNumber) {
+        dispatcherService.deleteDrone(serialNumber);
+    }
+
+    @Override
     public List<DroneDto> listAvailableDrones() {
         return dispatcherService.getAvailableDrones();
     }

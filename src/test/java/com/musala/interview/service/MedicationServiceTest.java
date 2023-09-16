@@ -43,6 +43,7 @@ class MedicationServiceTest {
         medicationRequest.setWeight(100);
 
         medicationEntity = new GoodsEntity();
+        medicationEntity.setGoodsType(1);
         medicationEntity.setId(2);
         medicationEntity.setName("Pills");
         medicationEntity.setCode("PIL_1");
@@ -57,6 +58,7 @@ class MedicationServiceTest {
         medication.setName("Aspirin");
         medication.setCode("ASP");
         medication.setWeight(100);
+        medication.setGoodsType(1);
         // then
         when(goodsRepository.findByDroneSerialNumber(anyString())).thenReturn(Optional.of(List.of(medication, medicationEntity)));
         // when

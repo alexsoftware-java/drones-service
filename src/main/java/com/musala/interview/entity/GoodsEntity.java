@@ -43,7 +43,7 @@ public class GoodsEntity {
     @ManyToOne(fetch = FetchType.EAGER, optional = false, cascade = CascadeType.MERGE)
     @JoinColumn(name = "drone_id", referencedColumnName = "id", nullable = false)
     private DroneEntity drone;
-    
+
     @OneToOne
     @JoinColumn(name="image_id", referencedColumnName = "id")
     private ImageEntity image;
