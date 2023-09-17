@@ -2,9 +2,9 @@ spring:
   application:
     name: drones-dispatcher-service
   datasource:
-    url: jdbc:h2:mem:drones
-    username: sa
-    password: pa$$word
+    url: ${DATABASE_URL:jdbc:h2:mem:drones}
+    username: ${DATABASE_USERNAME:sa}
+    password: ${DATABASE_PASSWORD:pa$$word}
     driverClassName: org.h2.Driver
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect
@@ -16,11 +16,11 @@ logging:
     org.springdoc: INFO
     org.hibernate: INFO
   file:
-    name: ./logs/drones-dispatcher-service.log
+    name: ${LOGS_LOCATION:./logs/drones-dispatcher-service.log}
 drones:
   dispatcher-check-ms: ${DISPATCHER_CHECK_MS:10000}
   discharge-when-move-percent: ${DISCHARGE_WHEN_MOVE_PERCENT:5}
   discharge-when-idle-percent: ${DISCHARGE_WHEN_IDLE_PERCENT:2}
   charge-on-every-check-by-percent: ${CHARGING_ON_EVERY_STEP_BY_PERCENT:5}
   battery-level-threshold: ${BATTERY_LEVEL_THRESHOLD:25}
-  steps-before-charged: ${STEP_BEFORE_CHARGED:5}
+  steps-before-charged: ${STEPS_BEFORE_CHARGED:5}
