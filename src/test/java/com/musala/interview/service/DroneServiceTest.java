@@ -26,7 +26,6 @@ import static org.mockito.Mockito.*;
 
 @ExtendWith(SpringExtension.class)
 class DroneServiceTest {
-
     @MockBean
     private DronesRepository dronesRepository;
     private DroneService service;

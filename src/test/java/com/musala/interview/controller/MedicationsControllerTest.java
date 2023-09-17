@@ -114,7 +114,7 @@ class MedicationsControllerTest {
                 .andExpect(content().string("""
                         Error occurred, request validation failed! addMedicationBySN.medicationRequestDto: Medication request validation failed!
                         Please check: name (allowed only letters, numbers, ‘-‘, ‘_’)',
-                        code (allowed only upper case letters, underscore and numbers), max weight=500, max image size=10MB"""));
+                        code (allowed only upper case letters, underscore and numbers), max weight=500, max image size=1MB"""));
         verify(goodsRepository, times(0)).saveAndFlush(any(GoodsEntity.class));
     }
 
