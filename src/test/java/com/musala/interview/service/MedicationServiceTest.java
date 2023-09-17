@@ -10,9 +10,12 @@ import com.musala.interview.repository.DronesRepository;
 import com.musala.interview.repository.GoodsRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.List;
 import java.util.Optional;
@@ -22,11 +25,11 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 
-@SpringBootTest
+@ExtendWith(SpringExtension.class)
 class MedicationServiceTest {
-    @Mock
+    @MockBean
     private GoodsRepository goodsRepository;
-    @Mock
+    @MockBean
     private DronesRepository dronesRepository;
 
     private MedicationService medicationService;

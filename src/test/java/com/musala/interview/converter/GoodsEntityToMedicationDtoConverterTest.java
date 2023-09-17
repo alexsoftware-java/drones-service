@@ -5,16 +5,18 @@ import com.musala.interview.entity.GoodsEntity;
 import com.musala.interview.entity.ImageEntity;
 import com.musala.interview.exception.DispatcherException;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Import;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@SpringBootTest
 class GoodsEntityToMedicationDtoConverterTest {
 
-    @Autowired
-    private GoodsEntityToMedicationDtoConverter converter;
+    private final GoodsEntityToMedicationDtoConverter converter = new GoodsEntityToMedicationDtoConverter();
 
     @Test
     void converterTest() {
