@@ -1,40 +1,131 @@
 package com.musala.interview.controller;
 
+import com.musala.interview.dto.Model;
+import com.musala.interview.dto.State;
+import com.musala.interview.entity.DroneEntity;
+import com.musala.interview.repository.DronesRepository;
+import com.musala.interview.service.DispatcherScheduledService;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.boot.test.mock.mockito.SpyBean;
+import org.springframework.http.MediaType;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.web.servlet.MockMvc;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.hamcrest.Matchers.containsString;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+/**
+ * Integration tests.
+ * data.sql applies.
+ * No DB clean applies
+ */
+@ExtendWith(SpringExtension.class)
+@SpringBootTest
+@MockBean(DispatcherScheduledService.class) // disable scheduler by mocking it
+@AutoConfigureMockMvc
 class DronesControllerTest {
 
-    @Test
-    void addDrone() {
+    @Autowired
+    private MockMvc mockMvc;
+    @SpyBean
+    private DronesRepository dronesRepository;
+    private DroneEntity droneEntity;
+
+    @BeforeEach
+    void init(){
+        droneEntity = new DroneEntity();
+        droneEntity.setModel(Model.CRUISERWEIGHT);
+        droneEntity.setSerialNumber("DRN_123456");
+        droneEntity.setState(State.IDLE);
+        droneEntity.setBatteryCapacity(100);
+        droneEntity.setWeightLimit(300);
     }
 
     @Test
-    void deleteDrone() {
+    void addDrone() throws Exception {
+        // when
+        mockMvc.perform(post("/api/v1/drones")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {
+                                  "serialNumber": "DRONE_1",
+                                  "name": "Delivery Drone 1",
+                                  "model": "Cruiserweight",
+                                  "weightLimit": 250
+                                }"""))
+        // then
+                .andExpect(status().isOk())
+                .andExpect(content().string("""
+                        {"serialNumber":"DRONE_1","model":"Cruiserweight","weightLimit":250,"batteryCapacity":100,"state":"IDLE"}"""));
     }
 
     @Test
-    void listAvailableDrones() {
+    void addDroneBadRequest() throws Exception {
+        // when
+        mockMvc.perform(post("/api/v1/drones")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {
+                                  "serialNumber": "#$!",
+                                  "name": "Delivery Drone 1",
+                                  "model": "Cruiserweight",
+                                  "weightLimit": 250
+                                }"""))
+        // then
+                .andExpect(status().isBadRequest())
+                .andExpect(content().string("""
+                        Error occurred, request validation failed! addDrone.droneRequestDto: - serial number (100 characters max);
+                        - model (Lightweight, Middleweight, Cruiserweight, Heavyweight);
+                        - weight limit (500gr max);"""));
     }
 
     @Test
-    void getDroneBatteryLevelBySN() {
+    void deleteDrone() throws Exception {
+        // given
+        dronesRepository.save(droneEntity);
+        // when
+        mockMvc.perform(delete("/api/v1/drones/DRN_123456"))
+        // then
+                .andExpect(status().isOk());
+        verify(dronesRepository).delete(any(DroneEntity.class));
     }
 
     @Test
-    void getMedicationBySN() {
+    void deleteDroneBadRequest() throws Exception {
+        // given
+        dronesRepository.save(droneEntity);
+        // when
+        mockMvc.perform(delete("/api/v1/drones/RN_123456"))
+                // then
+                .andExpect(status().isBadRequest());
+        verify(dronesRepository, times(0)).delete(any(DroneEntity.class));
     }
 
     @Test
-    void addMedicationBySN() {
+    void listAvailableDrones() throws Exception {
+        mockMvc.perform(get("/api/v1/drones"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(content().string(containsString("[{\"serialNumber\":\"DRONE-1\"")));
     }
 
     @Test
-    void addImage() {
-    }
+    void getDroneBatteryLevelBySN() throws Exception {
+        mockMvc.perform(get("/api/v1/drones/DRONE-1/battery"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(content().string("100"));
 
-    @Test
-    void getImage() {
     }
 }

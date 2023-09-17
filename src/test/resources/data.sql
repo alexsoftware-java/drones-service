@@ -1,0 +1,2 @@
+insert into drones (serial_number, model, state, weight_limit, battery_capacity) values ('DR-111', 'LIGHTWEIGHT','IDLE', 100, 100);
+insert into goods (goods_type, name, weight, code, drone_id) values (1, 'ASPIRIN', 50, 'ASP_1', 1);
