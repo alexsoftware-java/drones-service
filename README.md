@@ -44,7 +44,7 @@ Follow these steps to set up and run the Drone Dispatcher Service on your local 
 
 ## Running Tests
 
-To run tests for the Drone Dispatcher Service, use the following Gradle command:
+To run both integration and unit tests for the Drone Dispatcher Service, use the following Gradle command:
 
 ```shell
 ./gradlew test
@@ -68,8 +68,6 @@ To configure the Drone Dispatcher Service, you can set the following environment
 
 ## Usage
 
-### CRUD Operations on Drones
-
 How to interact with the API using JSON payloads and the full list of methods with examples you can check via [Swagger UI](http://localhost:8080/swagger-ui/index.html).
 
 #### Create a Drone example (POST)
@@ -91,4 +89,4 @@ Ensure that you include the appropriate headers, such as `Content-Type: applicat
 
 ## Support
 
-If you encounter any issues or have questions, please create an issue in the GitHub repository or contact us at [alex.khlizov@gmail.com](mailto:alex.khlizov@gmail.com).
+If you encounter any issues or have questions, please create feel free to contact me at [alex.khlizov@gmail.com](mailto:alex.khlizov@gmail.com).

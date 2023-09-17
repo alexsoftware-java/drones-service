@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 /**
- * Exception handler for custom validators
+ * Exception handler for custom DispatcherException
  */
 @Slf4j
 @ControllerAdvice

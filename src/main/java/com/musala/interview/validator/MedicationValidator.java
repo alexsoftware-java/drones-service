@@ -19,7 +19,12 @@ public class MedicationValidator implements ConstraintValidator<ValidMedication,
         codePattern = Pattern.compile("^[A-Z\\d_]*$"); // only upper case letters, underscore and numbers
         ConstraintValidator.super.initialize(constraintAnnotation);
     }
-
+    /**
+     * @param requestDto object to validate
+     * @param context context in which the constraint is evaluated
+     * @return true, only if name and code is not empty. Medication weight is > 0 and not more when max drone weight capacity limit.
+     * Name and Code are checking by regexp as well.
+     */
     @Override
     public boolean isValid(MedicationDto requestDto, ConstraintValidatorContext context) {
         if (!StringUtils.hasText(requestDto.getName()) || !StringUtils.hasText(requestDto.getCode())) return false;

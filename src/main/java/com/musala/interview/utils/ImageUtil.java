@@ -6,6 +6,9 @@ import java.io.ByteArrayOutputStream;
 import java.util.zip.Deflater;
 import java.util.zip.Inflater;
 
+/**
+ * Utility class to store only compressed images
+ */
 public class ImageUtil {
 
     public static byte[] compressImage(byte[] data) {

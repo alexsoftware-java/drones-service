@@ -13,7 +13,7 @@ public @interface ValidMedication {
     String message() default """
             Medication request validation failed!
             Please check: name (allowed only letters, numbers, ‘-‘, ‘_’)',
-            code (allowed only upper case letters, underscore and numbers), max weight=500, max image size=10MB""";
+            code (allowed only upper case letters, underscore and numbers), max weight=500, max image size=1MB""";
     Class<? extends Payload>[] payload() default {};
     Class<?>[] groups() default {};
 }

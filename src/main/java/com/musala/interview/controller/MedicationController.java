@@ -1,9 +1,7 @@
 package com.musala.interview.controller;
 
 import com.musala.interview.controller.contract.MedicationControllerAPI;
-import com.musala.interview.dto.DroneDto;
 import com.musala.interview.dto.MedicationDto;
-import com.musala.interview.service.DroneService;
 import com.musala.interview.service.ImageService;
 import com.musala.interview.service.MedicationService;
 import lombok.RequiredArgsConstructor;

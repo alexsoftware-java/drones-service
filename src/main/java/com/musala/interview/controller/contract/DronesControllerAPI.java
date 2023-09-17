@@ -52,7 +52,7 @@ public interface DronesControllerAPI {
     @PostMapping
     DroneDto addDrone(@ValidDrone @Parameter(description = "JSON represents the drone expected to be added") @RequestBody DroneDto droneRequestDto);
 
-    @Operation(summary = "Delete drone under dispatcher control(hard deletion)")
+    @Operation(summary = "Delete drone under dispatcher control")
     @DeleteMapping(value = "/{serialNumber}")
     void deleteDrone(@PathVariable("serialNumber") String serialNumber);
 }

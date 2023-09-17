@@ -19,7 +19,7 @@ public class DispatcherScheduledService {
     private final DronesRepository dronesRepository;
     private final PropertiesConfig propertiesConfig;
     private final static Map<State, State> STATES_MAP = new HashMap<>(6);
-
+    // states transition rules
     static {
         STATES_MAP.put(State.IDLE, State.LOADING);
         STATES_MAP.put(State.LOADING, State.LOADED);
@@ -29,7 +29,7 @@ public class DispatcherScheduledService {
         STATES_MAP.put(State.RETURNING, State.IDLE);
     }
 
-    private final Map<String, Integer> dronesOnCharge = new HashMap<>(10);
+    private final Map<String, Integer> dronesOnCharge = new HashMap<>();
 
     /**
      * Drone dispatcher:
@@ -60,7 +60,7 @@ public class DispatcherScheduledService {
     }
 
     /**
-     * Drone's mover, change drone state if it has a delivery, or returning. And discharging drone on every step
+     * Drone's mover, change drone state if it has a delivery, or returning. And discharge drone on every step
      * @param drone DroneEntity
      */
     private void move(DroneEntity drone) {

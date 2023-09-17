@@ -17,7 +17,11 @@ public class EnumValidator implements ConstraintValidator<ValidEnum, Enum<?>> {
             throw new IllegalArgumentException("Given regex is invalid", e);
         }
     }
-
+    /**
+     * @param value object to validate, subclass of Enum
+     * @param context context in which the constraint is evaluated
+     * @return true, only if given Enum value match the regexp from annotation parameter
+     */
     @Override
     public boolean isValid(Enum<?> value, ConstraintValidatorContext context) {
         if (value == null) {

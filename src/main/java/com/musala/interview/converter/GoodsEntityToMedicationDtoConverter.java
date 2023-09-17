@@ -12,7 +12,7 @@ public class GoodsEntityToMedicationDtoConverter implements Converter<GoodsEntit
     @Override
     public MedicationDto convert(GoodsEntity source) {
         if (source.getGoodsType() != GoodsTypes.MEDICATIONS) {
-            throw new DispatcherException("Illegal argument during goods to medication conversion given!");
+            throw new DispatcherException("Can't get medication");
         }
         var medication = new MedicationDto();
         medication.setId(source.getId());
