@@ -14,6 +14,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.http.MediaType;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -27,10 +28,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 /**
  * Integration tests.
- * data.sql applies.
- * No DB clean applies
  */
 @ExtendWith(SpringExtension.class)
+@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 @SpringBootTest
 @MockBean(DispatcherScheduledService.class) // disable scheduler by mocking it
 @AutoConfigureMockMvc
@@ -114,15 +114,18 @@ class DronesControllerTest {
 
     @Test
     void listAvailableDrones() throws Exception {
+        dronesRepository.save(droneEntity);
         mockMvc.perform(get("/api/v1/drones"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(content().string(containsString("[{\"serialNumber\":\"DRONE-1\"")));
+                .andExpect(content().string(containsString("""
+                        {"serialNumber":"DRN_123456","model":"Cruiserweight","weightLimit":300,"batteryCapacity":100,"state":"IDLE"}""")));
     }
 
     @Test
     void getDroneBatteryLevelBySN() throws Exception {
-        mockMvc.perform(get("/api/v1/drones/DRONE-1/battery"))
+        dronesRepository.save(droneEntity);
+        mockMvc.perform(get("/api/v1/drones/DRN_123456/battery"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(content().string("100"));
