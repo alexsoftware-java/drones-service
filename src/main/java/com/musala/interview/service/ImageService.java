@@ -7,6 +7,7 @@ import com.musala.interview.repository.ImageRepository;
 import com.musala.interview.utils.ImageUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
@@ -23,27 +24,30 @@ public class ImageService {
      * Compress and save image as bytearray
      *
      * @param medicationId id of medication
-     * @param imageBytes   array of bytes represents JPEG image
+     * @param image        array of bytes represents PNG image
      */
-    public void addImage(Long medicationId, MultipartFile imageBytes) {
+    public void addImage(Long medicationId, MultipartFile image) {
         var medication = goodsRepository.findById(medicationId);
         if (medication.isEmpty()) {
-            throw new DispatcherException("Can't add photo of medication - medication with Id %d not found".formatted(medicationId));
+            throw new DispatcherException("Can't add image of medication - medication with Id %d not found".formatted(medicationId));
         }
-        if (imageBytes.isEmpty()) {
-            throw new DispatcherException("Can't add photo of medication - photo is empty");
+        if (image.isEmpty()) {
+            throw new DispatcherException("Can't add image of medication - photo is empty");
         }
-        if (imageBytes.getSize() > 1_000_000) {
+        if (image.getOriginalFilename() == null || !MediaType.IMAGE_PNG_VALUE.equals(image.getContentType()) || !image.getOriginalFilename().contains(".png")) {
+            throw new DispatcherException("Can't add image of medication - photo is not in png format");
+        }
+        if (image.getSize() > 1_000_000) {
             throw new DispatcherException("Can't add photo of medication - image size is bigger when allowed(1MB)");
         }
-        var image = new ImageEntity();
+        var imageEntity = new ImageEntity();
         try {
-            image.setImage(ImageUtil.compressImage(imageBytes.getBytes()));
+            imageEntity.setImage(ImageUtil.compressImage(image.getBytes()));
         } catch (IOException ex) {
             throw new DispatcherException("Can't proceed image");
         }
-        image.setGoods(medication.get());
-        imageRepository.saveAndFlush(image);
+        imageEntity.setGoods(medication.get());
+        imageRepository.saveAndFlush(imageEntity);
     }
 
     public byte[] getImage(Long medicationId) {

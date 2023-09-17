@@ -52,12 +52,12 @@ public interface MedicationControllerAPI {
                                           @ValidMedication @Parameter(description = "JSON represents medications expected to be added") @RequestBody
                                           MedicationDto medicationRequestDto);
 
-    @Operation(summary = "Add image of medication")
-    @PostMapping(value = "/{medicationId}/image", consumes = MediaType.IMAGE_JPEG_VALUE)
+    @Operation(summary = "Add image of medication. PNG format supported")
+    @PostMapping(value = "/{medicationId}/image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     void addImage(@NotNull @PathVariable("medicationId") Long medicationId,
                   MultipartFile image);
 
     @Operation(summary = "Get medication image")
-    @GetMapping(value = "/{medicationId}/image", produces = MediaType.IMAGE_JPEG_VALUE)
+    @GetMapping(value = "/{medicationId}/image", produces = MediaType.IMAGE_PNG_VALUE)
     byte[] getImage(@NotNull @PathVariable("medicationId") Long medicationId);
 }
