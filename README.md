@@ -68,7 +68,7 @@ To configure the Drone Dispatcher Service, you can set the following environment
 
 ## Usage
 
-You can check how to interact with the API using JSON payloads, and the full list of methods with examples++++++++++++ via [Swagger UI](http://localhost:8080/swagger-ui/index.html).
+You can check how to interact with the API using JSON payloads, and the full list of methods with examples via [Swagger UI](http://localhost:8080/swagger-ui/index.html).
 
 #### Create a Drone example (POST)
 
