@@ -39,7 +39,7 @@ public class PropertiesConfig {
     private int chargeOnEveryCheckByPercent;
 
     /**
-     * Threshold of drone's battery level. Drone will be sent to charging and not be available for deliveries. Default 25%
+     * Threshold of drone's battery level. Drone will be sent to charging station and will not be available for deliveries. Default 25%
      */
     @Min(0)
     @Max(100)

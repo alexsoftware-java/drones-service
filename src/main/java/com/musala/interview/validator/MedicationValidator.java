@@ -22,8 +22,8 @@ public class MedicationValidator implements ConstraintValidator<ValidMedication,
     /**
      * @param requestDto object to validate
      * @param context context in which the constraint is evaluated
-     * @return true, only if name and code is not empty. Medication weight is > 0 and not more when max drone weight capacity limit.
-     * Name and Code are checking by regexp as well.
+     * @return true, only if name and code are not empty. Medication weight is > 0 and not more than max drone weight capacity limit.
+     * Name and code are checked by regexp as well.
      */
     @Override
     public boolean isValid(MedicationDto requestDto, ConstraintValidatorContext context) {

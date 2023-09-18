@@ -175,7 +175,7 @@ class MedicationsControllerTest {
                 )
                 // then
                 .andExpect(status().isBadRequest())
-                .andExpect(content().string("Dispatcher can't proceed your request: Can't add image of medication - photo is not in png format"));
+                .andExpect(content().string("Dispatcher can't process your request: Can't add image of medication - photo is not in png format"));
     }
 
     @Test

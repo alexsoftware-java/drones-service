@@ -22,7 +22,7 @@ public class DroneDto {
      */
     private Integer weightLimit;
     /**
-     * battery capacity (percentage), 0-100
+     * Battery capacity (percentage), 0-100
      */
     private Integer batteryCapacity;
     /**

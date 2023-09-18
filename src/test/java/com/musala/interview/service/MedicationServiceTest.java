@@ -101,7 +101,7 @@ class MedicationServiceTest {
         when(goodsRepository.saveAndFlush(any(GoodsEntity.class))).thenReturn(medicationEntity);
         // when
         var ex = assertThrows(DispatcherException.class, () -> medicationService.addMedication("12345", medicationRequest));
-        assertEquals("Medication can't be added to drone with SN 12345, as weight limit of 10 gr will be exceeded!", ex.getMessage());
+        assertEquals("Medication can't be added to drone with SN 12345, as weight limit of 10 g will be exceeded!", ex.getMessage());
     }
 
     @Test

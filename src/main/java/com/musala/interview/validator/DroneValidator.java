@@ -16,7 +16,7 @@ public class DroneValidator implements ConstraintValidator<ValidDrone, DroneDto>
     /**
      * @param requestDto object to validate
      * @param context context in which the constraint is evaluated
-     * @return true, only if drone serial number length match the rule from config. And weight limit is > 0 and not more when max capacity limit.
+     * @return true, only if: drone serial number length matches the rule from config, weight limit is > 0 and not more than max capacity limit.
      */
     @Override
     public boolean isValid(DroneDto requestDto, ConstraintValidatorContext context) {

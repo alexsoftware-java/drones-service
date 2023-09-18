@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Tag(name = "Drones dispatcher API", description = "API allowing CRUD operation on drones")
+@Tag(name = "Drones dispatcher API", description = "API allowing CRUD operations on drones")
 @RequestMapping("/api/v1/drones")
 @Validated
 public interface DronesControllerAPI {
@@ -52,7 +52,7 @@ public interface DronesControllerAPI {
     @PostMapping
     DroneDto addDrone(@ValidDrone @Parameter(description = "JSON represents the drone expected to be added") @RequestBody DroneDto droneRequestDto);
 
-    @Operation(summary = "Delete drone under dispatcher control")
+    @Operation(summary = "Delete drone from dispatcher control")
     @DeleteMapping(value = "/{serialNumber}")
     void deleteDrone(@PathVariable("serialNumber") String serialNumber);
 }

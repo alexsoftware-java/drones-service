@@ -54,21 +54,21 @@ To run both integration and unit tests for the Drone Dispatcher Service, use the
 
 To configure the Drone Dispatcher Service, you can set the following environment variables:
 
-| Variable Name                       | Description                                                             | Predefined value in application.yml  |
-|-------------------------------------|-------------------------------------------------------------------------|--------------------------------------|
-| `DATABASE_URL`                      | URL for the database                                                    | jdbc:h2:mem:drones                   |
-| `DATABASE_USERNAME`                 | Database username                                                       | sa                                   |
-| `DATABASE_PASSWORD`                 | Database password                                                       | pa$$word                             |
-| `LOGS_LOCATION`                     | Log file location (logs rotations performs on daily basis)              | ./logs/drones-dispatcher-service.log |
-| `DISPATCHER_CHECK_MS`               | How often dispatcher checks drone's states and move them (milliseconds) | 10000                                |
-| `DISCHARGE_WHEN_MOVE_PERCENT`       | Level of drone discharging on every move (percent)                      | 5                                    |
-| `DISCHARGE_WHEN_IDLE_PERCENT`       | Level of drone discharging in the idle state. 0 - for disable (percent) | 2                                    |
-| `CHARGING_ON_EVERY_STEP_BY_PERCENT` | Charging speed (percent)                                                | 5                                    |
-| `BATTERY_LEVEL_THRESHOLD`           | Threshold of low battery level (percent)                                | 25                                   |
+| Variable Name                       | Description                                                                  | Predefined value in application.yml  |
+|-------------------------------------|------------------------------------------------------------------------------|--------------------------------------|
+| `DATABASE_URL`                      | URL for the database                                                         | jdbc:h2:mem:drones                   |
+| `DATABASE_USERNAME`                 | Database username                                                            | sa                                   |
+| `DATABASE_PASSWORD`                 | Database password                                                            | pa$$word                             |
+| `LOGS_LOCATION`                     | Log file location (logs rotations performs on daily basis)                   | ./logs/drones-dispatcher-service.log |
+| `DISPATCHER_CHECK_MS`               | How often the dispatcher checks drones' states and moves them (milliseconds) | 10000                                |
+| `DISCHARGE_WHEN_MOVE_PERCENT`       | Level of drone discharging on every move (percent)                           | 5                                    |
+| `DISCHARGE_WHEN_IDLE_PERCENT`       | Level of drone discharging in the idle state. 0 - for disable (percent)      | 2                                    |
+| `CHARGING_ON_EVERY_STEP_BY_PERCENT` | Charging speed (percent)                                                     | 5                                    |
+| `BATTERY_LEVEL_THRESHOLD`           | Threshold of low battery level (percent)                                     | 25                                   |
 
 ## Usage
 
-How to interact with the API using JSON payloads and the full list of methods with examples you can check via [Swagger UI](http://localhost:8080/swagger-ui/index.html).
+You can check how to interact with the API using JSON payloads, and the full list of methods with examples++++++++++++ via [Swagger UI](http://localhost:8080/swagger-ui/index.html).
 
 #### Create a Drone example (POST)
 
@@ -89,4 +89,4 @@ Ensure that you include the appropriate headers, such as `Content-Type: applicat
 
 ## Support
 
-If you encounter any issues or have questions, please create feel free to contact me at [alex.khlizov@gmail.com](mailto:alex.khlizov@gmail.com).
+If you encounter any issues or have questions, please feel free to contact me at [alex.khlizov@gmail.com](mailto:alex.khlizov@gmail.com).

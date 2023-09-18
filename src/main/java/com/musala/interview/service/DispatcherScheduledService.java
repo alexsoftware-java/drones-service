@@ -33,9 +33,9 @@ public class DispatcherScheduledService {
 
     /**
      * Drone dispatcher:
-     * 1) Monitors drone states and make them moves every specified number of ms.
-     * 2) Monitors batteries level, when it's too low - drone can't start moving before charged necessary
-     * 3) Every step is discharging drone by 5%. Step in the idle state - by 2%.
+     * 1) Monitors drone states and make them move every specified number of ms.
+     * 2) Monitors batteries level, when it's too low - dispatcher doesn't move drone before it is charged up
+     * 3) Every step is discharging drone by 5%. Step in the idle state - by 2% (configurable).
      */
     @Scheduled(fixedRateString = "${drones.dispatcher-check-ms}")
     public void dronesDispatcher() {
@@ -45,13 +45,13 @@ public class DispatcherScheduledService {
             String sn = drone.getSerialNumber();
             // Check if drone is still charging (charging steps is not over)
             if (dronesOnCharge.containsKey(sn) && dronesOnCharge.get(sn) > 0) {
-                log.debug("Dispatcher: Drone {} is still on charge, steps remaining: {}", sn, dronesOnCharge.get(sn));
+                log.debug("Dispatcher: Drone {} is still charging, steps remaining: {}", sn, dronesOnCharge.get(sn));
                 charge(drone);
                 dronesOnCharge.put(sn, dronesOnCharge.get(sn) - 1);
                 // Check if drone is needs to be charged
             } else if (drone.getState().equals(State.IDLE) && drone.getBatteryCapacity() < propertiesConfig.getBatteryLevelThreshold()) {
                 dronesOnCharge.put(drone.getSerialNumber(), propertiesConfig.getStepsBeforeCharged());
-                log.warn("Dispatcher: Drone {} has low battery capacity level! Going to send it to charging station!", sn);
+                log.warn("Dispatcher: Drone {} has low battery level! Going to send it to charging station!", sn);
                 charge(drone);
             } else {
                 move(drone);
@@ -60,7 +60,8 @@ public class DispatcherScheduledService {
     }
 
     /**
-     * Drone's mover, change drone state if it has a delivery, or returning. And discharge drone on every step
+     * Drone's mover.
+     * Changes drone state if it has a delivery, or returning. And discharges drone on every step
      * @param drone DroneEntity
      */
     private void move(DroneEntity drone) {
@@ -76,7 +77,7 @@ public class DispatcherScheduledService {
             drone.setBatteryCapacity(drone.getBatteryCapacity() - propertiesConfig.getDischargeWhenMovePercent());
             log.info("Dispatcher: Drone {} has been moved from {} to {}", drone.getSerialNumber(), previousState, newDroneState);
         } else {
-            // Anyway drones are discharging even when IDLE (depends on config)
+            // Drones are discharging even when IDLE (depends on config)
             drone.setBatteryCapacity(drone.getBatteryCapacity() - propertiesConfig.getDischargeWhenIdlePercent());
         }
         dronesRepository.saveAndFlush(drone);

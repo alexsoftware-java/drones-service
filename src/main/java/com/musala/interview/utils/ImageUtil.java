@@ -44,7 +44,7 @@ public class ImageUtil {
             }
             outputStream.close();
         } catch (Exception e) {
-            throw new DispatcherException("Error occurred during getting of image", e);
+            throw new DispatcherException("Error occurred during getting an image", e);
         }
         return outputStream.toByteArray();
     }

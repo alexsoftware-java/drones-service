@@ -21,15 +21,15 @@ public class ImageService {
     private final GoodsRepository goodsRepository;
 
     /**
-     * Compress and save image as bytearray
+     * Compresses and saves image as bytearray
      *
      * @param medicationId id of medication
-     * @param image        array of bytes represents PNG image
+     * @param image        array of bytes representing PNG image
      */
     public void addImage(Long medicationId, MultipartFile image) {
         var medication = goodsRepository.findById(medicationId);
         if (medication.isEmpty()) {
-            throw new DispatcherException("Can't add image of medication - medication with Id %d not found".formatted(medicationId));
+            throw new DispatcherException("Can't add image of medication - medication with Id %d is not found".formatted(medicationId));
         }
         if (image.isEmpty()) {
             throw new DispatcherException("Can't add image of medication - photo is empty");
@@ -38,13 +38,13 @@ public class ImageService {
             throw new DispatcherException("Can't add image of medication - photo is not in png format");
         }
         if (image.getSize() > 1_000_000) {
-            throw new DispatcherException("Can't add photo of medication - image size is bigger when allowed(1MB)");
+            throw new DispatcherException("Can't add photo of medication - image size is larger than allowed (1MB)");
         }
         var imageEntity = new ImageEntity();
         try {
             imageEntity.setImage(ImageUtil.compressImage(image.getBytes()));
         } catch (IOException ex) {
-            throw new DispatcherException("Can't proceed image");
+            throw new DispatcherException("Can't process image");
         }
         imageEntity.setGoods(medication.get());
         imageRepository.saveAndFlush(imageEntity);

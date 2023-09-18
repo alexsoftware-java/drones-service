@@ -17,13 +17,13 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
-@Tag(name = "Medication control API", description = "API allowing control drones deliveries")
+@Tag(name = "Medication control API", description = "API allowing to control drone delivery")
 @RequestMapping("/api/v1/drones/{serialNumber}/medication")
 @Validated
 public interface MedicationControllerAPI {
     @Operation(summary = "Get medication")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "List of all medication on board", content = {@Content(mediaType = "application/json")}),
+            @ApiResponse(responseCode = "200", description = "List of all medications on board", content = {@Content(mediaType = "application/json")}),
             @ApiResponse(responseCode = "400", description = "Drone is not found", content = @Content)
     })
     @GetMapping
@@ -31,7 +31,7 @@ public interface MedicationControllerAPI {
 
     @Operation(summary = "Add medication")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "List of all medication on board",
+            @ApiResponse(responseCode = "200", description = "List of all medications on board",
                     content = {@Content(mediaType = "application/json",
                             examples = {@ExampleObject(value = """
                                     [

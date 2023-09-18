@@ -23,7 +23,7 @@ public class DroneService {
     private final PropertiesConfig propertiesConfig;
 
     /**
-     * @return List of drones in IDLE state and good level of battery charge
+     * @return List of drones in IDLE state and having good level of battery charge
      */
     public List<DroneDto> getAvailableDrones() {
         var dronesInIdleState = dronesRepository.findByStateIn(List.of(State.IDLE))
