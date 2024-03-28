@@ -11,7 +11,7 @@ spring:
     defer-datasource-initialization: true
 logging:
   level:
-    com.musala.interview: DEBUG
+    com.m.interview: DEBUG
     org.springframework.web: DEBUG
     org.springdoc: INFO
     org.hibernate: INFO

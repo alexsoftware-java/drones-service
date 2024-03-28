@@ -1,8 +1,8 @@
-# Drone Dispatcher Service
+# Drone Management Service
 
 ## Overview
 
-This repository contains a Drone Dispatcher Service developed using Spring Boot 3 and Spring Data JPA. 
+This repository contains a Drone Management Service developed using Spring Boot 3 and Spring Data JPA. 
 
 Rigorous testing has been integrated into the project using Mockito, JUnit 5, and WireMock. 
 
@@ -26,7 +26,7 @@ Additionally, comprehensive API documentation is available through Swagger UI.
 
 ## Getting Started
 
-Follow these steps to set up and run the Drone Dispatcher Service on your local machine using Gradle:
+Follow these steps to set up and run the Drone Management Service on your local machine using Gradle:
 
 1. Clone this repository to your local system using `git clone`.
 
@@ -44,7 +44,7 @@ Follow these steps to set up and run the Drone Dispatcher Service on your local 
 
 ## Running Tests
 
-To run both integration and unit tests for the Drone Dispatcher Service, use the following Gradle command:
+To run both integration and unit tests for the Drone Management Service, use the following Gradle command:
 
 ```shell
 ./gradlew test
@@ -52,19 +52,19 @@ To run both integration and unit tests for the Drone Dispatcher Service, use the
 
 ## Environment Variables
 
-To configure the Drone Dispatcher Service, you can set the following environment variables:
+To configure the Drone Management Service, you can set the following environment variables:
 
-| Variable Name                       | Description                                                                  | Predefined value in application.yml  |
-|-------------------------------------|------------------------------------------------------------------------------|--------------------------------------|
-| `DATABASE_URL`                      | URL for the database                                                         | jdbc:h2:mem:drones                   |
-| `DATABASE_USERNAME`                 | Database username                                                            | sa                                   |
-| `DATABASE_PASSWORD`                 | Database password                                                            | pa$$word                             |
-| `LOGS_LOCATION`                     | Log file location (logs rotations performs on daily basis)                   | ./logs/drones-dispatcher-service.log |
-| `DISPATCHER_CHECK_MS`               | How often the dispatcher checks drones' states and moves them (milliseconds) | 10000                                |
-| `DISCHARGE_WHEN_MOVE_PERCENT`       | Level of drone discharging on every move (percent)                           | 5                                    |
-| `DISCHARGE_WHEN_IDLE_PERCENT`       | Level of drone discharging in the idle state. 0 - for disable (percent)      | 2                                    |
-| `CHARGING_ON_EVERY_STEP_BY_PERCENT` | Charging speed (percent)                                                     | 5                                    |
-| `BATTERY_LEVEL_THRESHOLD`           | Threshold of low battery level (percent)                                     | 25                                   |
+| Variable Name                       | Description                                                                  | Predefined value in application.yml |
+|-------------------------------------|------------------------------------------------------------------------------|-------------------------------------|
+| `DATABASE_URL`                      | URL for the database                                                         | jdbc:h2:mem:drones                  |
+| `DATABASE_USERNAME`                 | Database username                                                            | sa                                  |
+| `DATABASE_PASSWORD`                 | Database password                                                            | pa$$word                            |
+| `LOGS_LOCATION`                     | Log file location (logs rotations performs on daily basis)                   | ./logs/drones.log                   |
+| `DISPATCHER_CHECK_MS`               | How often the dispatcher checks drones' states and moves them (milliseconds) | 10000                               |
+| `DISCHARGE_WHEN_MOVE_PERCENT`       | Level of drone discharging on every move (percent)                           | 5                                   |
+| `DISCHARGE_WHEN_IDLE_PERCENT`       | Level of drone discharging in the idle state. 0 - for disable (percent)      | 2                                   |
+| `CHARGING_ON_EVERY_STEP_BY_PERCENT` | Charging speed (percent)                                                     | 5                                   |
+| `BATTERY_LEVEL_THRESHOLD`           | Threshold of low battery level (percent)                                     | 25                                  |
 
 ## Usage
 
